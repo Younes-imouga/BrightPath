@@ -10,11 +10,16 @@ Route::get('/', function () {
     return view('public.welcome');
 });
 
-Route::get('/login', [UserController::class, 'showLogIn'])->name('login');
-Route::post('/login', [UserController::class, 'login']);
-Route::get('/signup', [UserController::class, 'showRegister']);
-Route::post('/signup', [UserController::class, 'register']);
-Route::get('/logout', [UserController::class, 'logout']);
+Route::middleware('guest')->group(function () {
+    Route::get('register', [UserController::class, 'showRegister'])->name('register');
+    Route::post('register', [UserController::class, 'register']);
+    Route::get('login', [UserController::class, 'showLogIn'])->name('login');
+    Route::post('login', [UserController::class, 'login']);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('logout', [UserController::class, 'LogOut'])->name('logout');
+});
 
 Route::get('/about', [UserController::class, 'showAbout']);
 Route::get('/courses', [UserController::class, 'showCourses']);
