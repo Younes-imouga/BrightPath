@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -25,7 +26,8 @@ class UserController extends Controller
     }
 
     public function LogOut(){
-        
+        Auth::logout();
+        return redirect()->route('login')->with('success', 'You have been successfully logged out.');
     }
 
     public function register(Request $request){
@@ -75,12 +77,15 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'Invalid password');
         }
 
-        if($user->role == 'admin'){
-            return redirect()->route('admin.admindashboard');
-        } elseif($user->role == 'agent'){
-            return redirect()->route('agent.agentdashboard');
-        } else {
-            return redirect()->route('user.dashboard');
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->role === 'agent') {
+                return redirect()->route('agent.dashboard');
+            } else {
+                return redirect()->route('student.dashboard');
+            }
         }
     }
 }
