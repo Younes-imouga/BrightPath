@@ -1,4 +1,4 @@
-@include('components.header')
+<?php echo $__env->make('components.header', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
   <main class="container mx-auto p-4 flex-grow">
     <section class="my-8">
@@ -33,4 +33,4 @@
       <!-- More courses as needed -->
     </section>
   </main>
-</body>
+</body><?php /**PATH C:\Users\LENOVO\Desktop\BrightPath\resources\views/admin/courses.blade.php ENDPATH**/ ?>

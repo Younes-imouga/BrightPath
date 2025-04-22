@@ -88,4 +88,32 @@ class UserController extends Controller
             }
         }
     }
+
+    public function updateRole(Request $request, $id) {
+        $request->validate([
+            'role' => 'required|in:admin,agent,user',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->role = $request->role;
+        $user->save();
+
+        return redirect()->route('admin.users')->with('success', 'User role updated successfully.');
+    }
+
+    public function BanUser($id) {
+        $user = User::findOrFail($id);
+        $user->is_banned = true;
+        $user->save();
+
+        return redirect()->route('admin.users')->with('success', 'User banned successfully.');
+    }
+
+    public function UnbanUser($id) {
+        $user = User::findOrFail($id);
+        $user->is_banned = false;
+        $user->save();
+
+        return redirect()->route('admin.users')->with('success', 'User unbanned successfully.');
+    }
 }
