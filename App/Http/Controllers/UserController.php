@@ -25,11 +25,6 @@ class UserController extends Controller
         return view('public.courses');
     }
 
-    public function LogOut(){
-        Auth::logout();
-        return redirect()->route('login')->with('success', 'You have been successfully logged out.');
-    }
-
     public function register(Request $request){
         $request->validate([
             'name' => 'required',
@@ -79,6 +74,12 @@ class UserController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
+
+            if ($user->is_banned) {
+                Auth::logout();
+                return redirect()->route('login')->with('error', 'Your account is banned.');
+            }
+
             if ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard');
             } elseif ($user->role === 'agent') {
@@ -88,4 +89,38 @@ class UserController extends Controller
             }
         }
     }
+
+    public function updateRole(Request $request, $id) {
+        $request->validate([
+            'role' => 'required|in:admin,agent,user',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->role = $request->role;
+        $user->save();
+
+        return redirect()->route('admin.users')->with('success', 'User role updated successfully.');
+    }
+
+    public function BanUser($id) {
+        $user = User::findOrFail($id);
+        $user->is_banned = true;
+        $user->save();
+
+        return redirect()->route('admin.users')->with('success', 'User banned successfully.');
+    }
+
+    public function UnbanUser($id) {
+        $user = User::findOrFail($id);
+        $user->is_banned = false;
+        $user->save();
+
+        return redirect()->route('admin.users')->with('success', 'User unbanned successfully.');
+    }
+    
+    public function LogOut(){
+        Auth::logout();
+        return redirect()->route('login')->with('success', 'You have been successfully logged out.');
+    }
+
 }

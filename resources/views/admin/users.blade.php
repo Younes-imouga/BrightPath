@@ -41,8 +41,41 @@
             <td class="border p-2 text-center">john@example.com</td>
             <td class="border p-2 text-center">Learner</td>
             <td class="border p-2 text-center">
-              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Edit</button>
-              <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Ban</button>
+              @if($user->id !== 1)
+              <form action="{{ route('admin.updateRole', $user->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <select name="role" class="border rounded p-1">
+                  <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
+                  <option value="agent" {{ $user->role === 'agent' ? 'selected' : '' }}>Agent</option>
+                  <option value="user" {{ $user->role === 'user' ? 'selected' : '' }}>User</option>
+                </select>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Update</button>
+              </form>
+              @else
+              <div class="my-2">
+                <span class="text-gray-900 bg-gray-300 py-1 px-2 shadow-md rounded-3xl">Cannot change role of Owner</span>
+              </div>
+              @endif
+            </td>
+            <td class="border p-2 text-center">
+              @if($user->role !== 'admin')
+                @if($user->is_banned)
+                  <form action="{{ route('admin.unbanUser', $user->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Unban</button>
+                  </form>
+                @else
+                <form action="{{ route('admin.banUser', $user->id) }}" method="POST">
+                  @csrf
+                  @method('PUT')
+                  <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Ban</button>
+                </form>
+                @endif
+              @else
+                <span class="text-gray-900 bg-gray-300 py-1 px-2 shadow-md  rounded-3xl">Cannot ban admins</span>
+              @endif
             </td>
           </tr>
           <!-- More rows as needed -->
