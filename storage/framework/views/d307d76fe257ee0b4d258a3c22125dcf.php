@@ -83,4 +83,4 @@
   </footer>
 </body>
 </html>
-<?php /**PATH C:\Users\LENOVO\Desktop\BrightPath\resources\views/welcome.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\LENOVO\Desktop\BrightPath\resources\views/public/welcome.blade.php ENDPATH**/ ?>

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Subtle Neon Login</title>
+  <title>BrightPath - SignUp</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .login-background {
+    .SignUp-background {
       position: fixed;
       top: -100%;
       left: -100%;
@@ -27,7 +27,7 @@
       animation: rotate-lights 8s linear infinite;
     }
 
-    .login-container {
+    .SignUp-container {
       background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(10px);
       padding: 2.5rem;
@@ -51,30 +51,45 @@
   </style>
 </head>
 <body class="flex justify-center items-center h-screen bg-white">
-  <div class="login-background"></div>
-  <div class="login-container">
+  <div class="SignUp-background"></div>
+  <div class="SignUp-container">
     <h2 class="mb-6 text-2xl font-bold text-cyan-500">Welcome To Bright Path!</h2>
-    
-    <input type="text" placeholder="Username" class="w-full p-3 mb-4 border border-cyan-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400">
-    <input type="text" placeholder="Email" class="w-full p-3 mb-4 border border-cyan-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400">
-    <input type="password" placeholder="Password" class="w-full p-3 mb-4 border border-cyan-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+    <form action="{{ route('register') }}" method="POST">
+      @csrf
+      <input type="text" name="name" placeholder="Username" 
+        value="{{ old('name') }}"
+        class="w-full p-3 mb-4 border border-cyan-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 @error('name') border-red-500 @enderror">
+      @error('name')
+        <p class="text-red-500 text-sm mb-4">{{ $message }}</p>
+      @enderror
 
-    <div class="flex items-center justify-center space-x-6 mb-6">
-      <label class="flex items-center space-x-2 text-gray-700">
-        <input type="radio" id="Student" name="role" class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-400">
-        <span>Student</span>
-      </label>
-      <label class="flex items-center space-x-2 text-gray-700">
-        <input type="radio" id="Teacher" name="role" class="w-4 h-4 text-cyan-500 border-gray-300 rounded focus:ring-cyan-400">
-        <span>Teacher</span>
-      </label>
-    </div>
+      <input type="email" name="email" placeholder="Email" 
+        value="{{ old('email') }}"
+        class="w-full p-3 mb-4 border border-cyan-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 @error('email') border-red-500 @enderror">
+      @error('email')
+        <p class="text-red-500 text-sm mb-4">{{ $message }}</p>
+      @enderror
 
-    <button onclick="login()" class="w-full p-3 bg-gradient-to-r from-cyan-400 to-teal-300 text-black font-bold rounded-md transition-transform transform hover:-translate-y-1 hover:shadow-lg">
-      Login
-    </button>
-    
-    <p class="mt-6 text-gray-600">Don't have an account? <a href="#" class="text-cyan-500 font-bold hover:underline">Sign up</a></p>
+      <input type="password" name="password" placeholder="Password" 
+        class="w-full p-3 mb-4 border border-cyan-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 @error('password') border-red-500 @enderror">
+      @error('password')
+        <p class="text-red-500 text-sm mb-4">{{ $message }}</p>
+      @enderror
+
+      <input type="password" name="password_confirmation" placeholder="Confirm Password" 
+        class="w-full p-3 mb-4 border border-cyan-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+
+      <button class="w-full mt-6 p-3 bg-gradient-to-r from-cyan-400 to-teal-300 text-black font-bold rounded-md transition-transform transform hover:-translate-y-1 hover:shadow-lg">
+        Sign Up
+      </button>
+
+      @if (session('error'))
+        <div class="mt-4 p-3 bg-red-100 text-red-700 border border-red-300 rounded-md">
+          {{ session('error') }}
+        </div>
+      @endif
+      <p class="mt-6 text-gray-600">Already have an account? <a href="{{ route('login') }}" class="text-cyan-500 font-bold hover:underline">Login</a></p>
+    </form>
   </div>
 </body>
 </html>

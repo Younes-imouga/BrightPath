@@ -53,39 +53,30 @@
 <body class="flex justify-center items-center h-screen bg-white">
   <div class="LogIn-background"></div>
   <div class="LogIn-container">
-    <form action="{{ route('login') }}" method="POST">
-      @csrf
+    <form action="/login" method="POST">
+      <?php echo csrf_field(); ?>
       <h2 class="mb-6 text-2xl font-bold text-cyan-500">Welcome To Bright Path!</h2>
-      <input type="email" name="email" placeholder="Email" 
-        value="{{ old('email') }}"
-        class="w-full p-3 mb-4 border border-cyan-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 @error('email') border-red-500 @enderror">
-      @error('email')
-        <p class="text-red-500 text-sm mb-4">{{ $message }}</p>
-      @enderror
-      <input type="password" name="password" placeholder="Password" 
-        class="w-full p-3 mb-4 border border-cyan-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 @error('password') border-red-500 @enderror">
-      @error('password')
-        <p class="text-red-500 text-sm mb-4">{{ $message }}</p>
-      @enderror
-      <div class="flex items-center mb-4">
-        <input type="checkbox" name="remember" id="remember" class="mr-2">
-        <label for="remember" class="text-gray-600">Remember me</label>
-      </div>
+      <input type="text" name="email" placeholder="Email" class="w-full p-3 mb-4 border border-cyan-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+      <input type="password" name="password" placeholder="Password" class="w-full p-3 mb-4 border border-cyan-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+
       <button class="w-full p-3 bg-gradient-to-r from-cyan-400 to-teal-300 text-black font-bold rounded-md transition-transform transform hover:-translate-y-1 hover:shadow-lg">
         Login
       </button>
-      @if (session('success'))
+      <?php if(session('success')): ?>
       <div class="mt-4 p-3 bg-green-100 text-green-700 border border-green-300 rounded-md">
-        {{ session('success') }}
+        <?php echo e(session('success')); ?>
+
       </div>
-      @endif
-      @if (session('error'))
+      <?php endif; ?>
+      <?php if(session('error')): ?>
       <div class="mt-4 p-3 bg-red-100 text-red-700 border border-red-300 rounded-md">
-        {{ session('error') }}
+        <?php echo e(session('error')); ?>
+
       </div>
-      @endif
-      <p class="mt-6 text-gray-600">Don't have an account? <a href="{{ route('register') }}" class="text-cyan-500 font-bold hover:underline">Register</a></p>
+      <?php endif; ?>
+      <p class="mt-6 text-gray-600">Don't have an account? <a href="/signup" class="text-cyan-500 font-bold hover:underline">Register</a></p>
     </form>
   </div>
 </body>
 </html>
+<?php /**PATH C:\Users\LENOVO\Desktop\BrightPath\resources\views/public/Auth/login.blade.php ENDPATH**/ ?>
