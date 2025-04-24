@@ -15,6 +15,7 @@
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="<?php echo e(route('admin.dashboard')); ?>">Dashboard</a>
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="<?php echo e(route('admin.users')); ?>">Users</a>
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="<?php echo e(route('admin.courses')); ?>">Courses</a>
+                    <a class="text-blue-500 hover:text-blue-700 mx-2" href="<?php echo e(route('admin.categories')); ?>">categories</a>
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="<?php echo e(route('admin.reclamations')); ?>">Reports</a>
                 <?php elseif(Auth::user()->role === 'agent'): ?>
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="<?php echo e(route('agent.dashboard')); ?>">Dashboard</a>
@@ -30,7 +31,7 @@
                     <button type="submit" class="text-blue-500 hover:text-blue-700 mx-2">Logout</button>
                 </form>
             <?php else: ?>
-                <a class="text-blue-500 hover:text-blue-700 mx-2" href="/home">Home</a>
+                <a class="text-blue-500 hover:text-blue-700 mx-2" href="/">Home</a>
                 <a class="text-blue-500 hover:text-blue-700 mx-2" href="/courses">Courses</a>
                 <a class="text-blue-500 hover:text-blue-700 mx-2" href="/about">about</a>
                 <a class="text-blue-500 hover:text-blue-700 mx-2" href="<?php echo e(route('login')); ?>">Login</a>
