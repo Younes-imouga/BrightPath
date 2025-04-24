@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BrightPath - SignUp</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
+<body class="flex justify-center items-center h-screen bg-white">
+<style>
     .SignUp-background {
       position: fixed;
       top: -100%;
@@ -49,8 +43,6 @@
       }
     }
   </style>
-</head>
-<body class="flex justify-center items-center h-screen bg-white">
   <div class="SignUp-background"></div>
   <div class="SignUp-container">
     <h2 class="mb-6 text-2xl font-bold text-cyan-500">Welcome To Bright Path!</h2>
@@ -92,4 +84,3 @@
     </form>
   </div>
 </body>
-</html>

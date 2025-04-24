@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BrightPath - About Us</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
 <body class="bg-gray-100 text-gray-800">
   <!-- Header -->
-  <header class="bg-white shadow p-4 flex justify-between items-center">
-    <h1 class="text-blue-500 text-2xl font-bold">BrightPath</h1>
-    <nav>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="index.html">Home</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="courses.html">Courses</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="about.html">About</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="contact.html">Contact</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="login.html">Login</a>
-    </nav>
-  </header>
+  @include('components.header')
 
   <!-- Main Content -->
   <main class="container mx-auto p-4">
@@ -51,4 +34,3 @@
     </p>
   </footer>
 </body>
-</html>

@@ -13,7 +13,8 @@ class AdminController extends Controller
     }
 
     public function showUsers(){
-        return view('admin.users');
+        $users = \App\Models\User::all();
+        return view('admin.users', compact('users'));
     }
 
     public function showReclamations(){
@@ -22,5 +23,25 @@ class AdminController extends Controller
 
     public function showQuizzes(){
         return view('admin.settings');
+    }
+
+    public function createCourse() {
+        return view('admin.create');
+    }
+
+    public function storeCourse(Request $request) {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'duration' => 'required|integer|min:1',
+        ]);
+
+        $course = new Course();
+        $course->title = $request->title;
+        $course->description = $request->description;
+        $course->duration = $request->duration;
+        $course->save();
+
+        return redirect()->route('admin.courses')->with('success', 'Course created successfully.');
     }
 }

@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BrightPath - Login</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
+<body class="flex justify-center items-center h-screen bg-white">
+<style>
     .LogIn-background {
       position: fixed;
       top: -100%;
@@ -49,8 +43,7 @@
       }
     }
   </style>
-</head>
-<body class="flex justify-center items-center h-screen bg-white">
+
   <div class="LogIn-background"></div>
   <div class="LogIn-container">
     <form action="{{ route('login') }}" method="POST">
@@ -88,4 +81,3 @@
     </form>
   </div>
 </body>
-</html>

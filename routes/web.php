@@ -27,9 +27,12 @@ Route::get('/courses', [UserController::class, 'showCourses']);
 Route::middleware(['role:admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'showAdmin'])->name('admin.dashboard');
     Route::get('/admin/users', [AdminController::class, 'showUsers'])->name('admin.users');
+    Route::put('/admin/users/{id}/role', [UserController::class, 'updateRole'])->name('admin.updateRole');
     Route::get('/admin/courses', [AdminController::class, 'showCourses'])->name('admin.courses');
     Route::get('/admin/reclamations', [AdminController::class, 'showReclamations'])->name('admin.reclamations');
     Route::get('/admin/quizzes', [AdminController::class, 'showQuizzes'])->name('admin.quizzes');
+    Route::get('/admin/courses/create', [AdminController::class, 'createCourse'])->name('admin.createCourse');
+    Route::post('/admin/courses', [AdminController::class, 'storeCourse'])->name('admin.storeCourse');
 });
 
 Route::middleware(['auth','role:user'])->group(function () {

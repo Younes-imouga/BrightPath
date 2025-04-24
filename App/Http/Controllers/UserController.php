@@ -117,7 +117,7 @@ class UserController extends Controller
 
         return redirect()->route('admin.users')->with('success', 'User unbanned successfully.');
     }
-    
+
     public function LogOut(){
         Auth::logout();
         return redirect()->route('login')->with('success', 'You have been successfully logged out.');
