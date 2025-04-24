@@ -20,6 +20,7 @@
             <td class="border p-2 text-center">{{ $user->username }}</td>
             <td class="border p-2 text-center">{{ $user->email }}</td>
             <td class="border p-2 text-center">
+              @if($user->id !== 1)
               <form action="{{ route('admin.updateRole', $user->id) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -30,13 +31,30 @@
                 </select>
                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Update</button>
               </form>
+              @else
+              <div class="my-2">
+                <span class="text-gray-900 bg-gray-300 py-1 px-2 shadow-md rounded-3xl">Cannot change role of Owner</span>
+              </div>
+              @endif
             </td>
             <td class="border p-2 text-center">
-              <form action="" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Ban</button>
-              </form>
+              @if($user->role !== 'admin')
+                @if($user->is_banned)
+                  <form action="{{ route('admin.unbanUser', $user->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Unban</button>
+                  </form>
+                @else
+                <form action="{{ route('admin.banUser', $user->id) }}" method="POST">
+                  @csrf
+                  @method('PUT')
+                  <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Ban</button>
+                </form>
+                @endif
+              @else
+                <span class="text-gray-900 bg-gray-300 py-1 px-2 shadow-md  rounded-3xl">Cannot ban admins</span>
+              @endif
             </td>
           </tr>
           @endforeach
