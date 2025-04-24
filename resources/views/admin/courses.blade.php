@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BrightPath Admin - User Management</title>
+  <title>BrightPath Admin - Course Management</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
@@ -22,32 +22,23 @@
 
   <!-- Main Content -->
   <main class="container mx-auto p-4 flex-grow">
-    <section class="bg-white rounded-lg shadow p-8 my-8">
-      <h2 class="text-2xl text-blue-500 font-bold mb-4">User Management</h2>
-      <table class="w-full border-collapse">
-        <thead>
-          <tr>
-            <th class="border p-2">ID</th>
-            <th class="border p-2">Name</th>
-            <th class="border p-2">Email</th>
-            <th class="border p-2">Role</th>
-            <th class="border p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="border p-2 text-center">1</td>
-            <td class="border p-2 text-center">John Doe</td>
-            <td class="border p-2 text-center">john@example.com</td>
-            <td class="border p-2 text-center">Learner</td>
-            <td class="border p-2 text-center">
-              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Edit</button>
-              <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Ban</button>
-            </td>
-          </tr>
-          <!-- More rows as needed -->
-        </tbody>
-      </table>
+    <section class="my-8">
+      <div class="bg-white rounded-lg shadow p-8 text-center mb-8 flex items-around justify-between px-10">
+        <h2 class="text-3xl text-blue-500 font-bold mb-4 text-center">Course Management</h2>
+        <a href="{{ route('admin.createCourse') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-4 rounded">Add New Course</a>
+      </div>  
+      @foreach($courses as $course)
+      <div class="bg-white rounded-lg shadow p-6 flex items-center justify-between mb-6">
+        <div>        
+          <h3 class="text-xl text-blue-500 font-semibold"> Course Name: {{ $course->name }}</h3>
+          <p class="text-gray-600">Finish Score: {{ $course->score }}</p>
+        </div>
+        <div class="mt-4">
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">Edit</button>
+          <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">Delete</button>
+        </div>
+      </div>
+      @endforeach
     </section>
   </main>
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BrightPath Admin - Course Management</title>
+  <title>BrightPath Admin - Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
@@ -22,29 +22,18 @@
 
   <!-- Main Content -->
   <main class="container mx-auto p-4 flex-grow">
-    <section class="space-y-6 my-8">
-      <h2 class="text-2xl text-blue-500 font-bold text-center">Course Management</h2>
-      <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-xl text-blue-500 font-semibold">Programming Basics</h3>
-        <p class="text-gray-600">Avg Duration: 1 day</p>
-        <div class="mt-4">
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">Edit</button>
-          <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">Delete</button>
-        </div>
+    <section class="grid md:grid-cols-3 gap-6 my-8">
+      <div class="bg-white rounded-lg shadow p-6 text-center">
+        <h3 class="text-xl text-blue-500 font-semibold mb-2">Total Users</h3>
+        <p class="text-2xl text-gray-600">1200</p>
       </div>
-      <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-xl text-blue-500 font-semibold">Mathematics for School</h3>
-        <p class="text-gray-600">Avg Duration: 3 days</p>
-        <div class="mt-4">
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">Edit</button>
-          <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">Delete</button>
-        </div>
+      <div class="bg-white rounded-lg shadow p-6 text-center">
+        <h3 class="text-xl text-blue-500 font-semibold mb-2">Active Courses</h3>
+        <p class="text-2xl text-gray-600">35</p>
       </div>
-      <!-- More courses as needed -->
-      <div class="text-center">
-        <button onclick="alert('Add course functionality coming soon!')" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-          Add New Course
-        </button>
+      <div class="bg-white rounded-lg shadow p-6 text-center">
+        <h3 class="text-xl text-blue-500 font-semibold mb-2">Quizzes Taken</h3>
+        <p class="text-2xl text-gray-600">480</p>
       </div>
     </section>
   </main>
@@ -55,3 +44,4 @@
   </footer>
 </body>
 </html>
+<?php /**PATH C:\Users\LENOVO\Desktop\BrightPath\resources\views/admin/admin-dashboard.blade.php ENDPATH**/ ?>
