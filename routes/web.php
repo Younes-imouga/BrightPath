@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -26,13 +28,24 @@ Route::get('/courses', [UserController::class, 'showCourses']);
 
 Route::middleware(['role:admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'showAdmin'])->name('admin.dashboard');
+
     Route::get('/admin/users', [AdminController::class, 'showUsers'])->name('admin.users');
     Route::put('/admin/users/{id}/role', [UserController::class, 'updateRole'])->name('admin.updateRole');
-    Route::get('/admin/courses', [AdminController::class, 'showCourses'])->name('admin.courses');
-    Route::get('/admin/reclamations', [AdminController::class, 'showReclamations'])->name('admin.reclamations');
-    Route::get('/admin/quizzes', [AdminController::class, 'showQuizzes'])->name('admin.quizzes');
-    Route::get('/admin/courses/create', [AdminController::class, 'createCourse'])->name('admin.createCourse');
-    Route::post('/admin/courses', [AdminController::class, 'storeCourse'])->name('admin.storeCourse');
+    Route::put('/admin/users/{id}/ban', [UserController::class, 'banUser'])->name('admin.banUser');
+    Route::put('/admin/users/{id}/unban', [UserController::class, 'unbanUser'])->name('admin.unbanUser');
+
+    Route::get('/admin/courses', [CourseController::class, 'showCourses'])->name('admin.courses');
+    Route::get('/admin/reclamations', [CourseController::class, 'showReclamations'])->name('admin.reclamations');
+    Route::get('/admin/quizzes', [CourseController::class, 'showQuizzes'])->name('admin.quizzes');
+    Route::get('/admin/courses/create', [CourseController::class, 'createCourse'])->name('admin.createCourse');
+    Route::post('/admin/courses', [CourseController::class, 'storeCourse'])->name('admin.storeCourse');
+
+    Route::get('/admin/categories', [CategoryController::class, 'showCategories'])->name('admin.categories');
+    Route::get('/admin/categories/create', [CategoryController::class, 'createCategory'])->name('admin.createCategory');
+    Route::post('/admin/categories', [CategoryController::class, 'storeCategory'])->name('admin.storeCategory');
+    Route::get('/admin/categories/{id}/edit', [CategoryController::class, 'editCategory'])->name('admin.editCategory');
+    Route::put('/admin/categories/{id}', [CategoryController::class, 'updateCategory'])->name('admin.updateCategory');
+    Route::delete('/admin/categories/{id}', [CategoryController::class, 'deleteCategory'])->name('admin.deleteCategory');
 });
 
 Route::middleware(['auth','role:user'])->group(function () {

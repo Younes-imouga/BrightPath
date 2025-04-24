@@ -20,6 +20,7 @@
             <td class="border p-2 text-center"><?php echo e($user->username); ?></td>
             <td class="border p-2 text-center"><?php echo e($user->email); ?></td>
             <td class="border p-2 text-center">
+              <?php if($user->id !== 1): ?>
               <form action="<?php echo e(route('admin.updateRole', $user->id)); ?>" method="POST">
                 <?php echo csrf_field(); ?>
                 <?php echo method_field('PUT'); ?>
@@ -30,13 +31,30 @@
                 </select>
                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Update</button>
               </form>
+              <?php else: ?>
+              <div class="my-2">
+                <span class="text-gray-900 bg-gray-300 py-1 px-2 shadow-md rounded-3xl">Cannot change role of Owner</span>
+              </div>
+              <?php endif; ?>
             </td>
             <td class="border p-2 text-center">
-              <form action="" method="POST">
-                <?php echo csrf_field(); ?>
-                <?php echo method_field('DELETE'); ?>
-                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Ban</button>
-              </form>
+              <?php if($user->role !== 'admin'): ?>
+                <?php if($user->is_banned): ?>
+                  <form action="<?php echo e(route('admin.unbanUser', $user->id)); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('PUT'); ?>
+                    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Unban</button>
+                  </form>
+                <?php else: ?>
+                <form action="<?php echo e(route('admin.banUser', $user->id)); ?>" method="POST">
+                  <?php echo csrf_field(); ?>
+                  <?php echo method_field('PUT'); ?>
+                  <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Ban</button>
+                </form>
+                <?php endif; ?>
+              <?php else: ?>
+                <span class="text-gray-900 bg-gray-300 py-1 px-2 shadow-md  rounded-3xl">Cannot ban admins</span>
+              <?php endif; ?>
             </td>
           </tr>
           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
