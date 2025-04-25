@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Course;
 
 class StudentController extends Controller
 {
@@ -11,7 +12,8 @@ class StudentController extends Controller
     }
 
     public function showCourses(){
-        return view('student.courses');
+        $courses = Course::all();
+        return view('student.courses', compact('courses'));
     }
 
     public function showMyCourses(){
@@ -52,5 +54,10 @@ class StudentController extends Controller
 
     public function showQuizRules(){
         return view('student.quizRules');
+    }
+
+    public function showCourse($id) {
+        $course = Course::with('contents')->findOrFail($id);
+        return view('student.courseDetails', compact('course'));
     }
 }

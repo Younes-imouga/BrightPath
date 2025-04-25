@@ -36,9 +36,19 @@ Route::middleware(['role:admin'])->group(function () {
 
     Route::get('/admin/courses', [CourseController::class, 'showCourses'])->name('admin.courses');
     Route::get('/admin/reclamations', [CourseController::class, 'showReclamations'])->name('admin.reclamations');
-    Route::get('/admin/quizzes', [CourseController::class, 'showQuizzes'])->name('admin.quizzes');
+    Route::get('/admin/quizzes', [AdminController::class, 'showQuizzes'])->name('admin.quizzes');
+    Route::get('/admin/quizzes/create', [AdminController::class, 'createQuiz'])->name('admin.createQuiz');
+    Route::post('/admin/quizzes', [AdminController::class, 'storeQuiz'])->name('admin.storeQuiz');
+    Route::get('/admin/quizzes/{id}/edit', [AdminController::class, 'editQuiz'])->name('admin.editQuiz');
+    Route::put('/admin/quizzes/{id}', [AdminController::class, 'updateQuiz'])->name('admin.updateQuiz');
+    Route::delete('/admin/quizzes/{id}', [AdminController::class, 'deleteQuiz'])->name('admin.deleteQuiz');
+
     Route::get('/admin/courses/create', [CourseController::class, 'createCourse'])->name('admin.createCourse');
     Route::post('/admin/courses', [CourseController::class, 'storeCourse'])->name('admin.storeCourse');
+    Route::get('/admin/courses/{id}', [CourseController::class, 'showCourse'])->name('admin.showCourse');
+    Route::get('/admin/courses/{id}/edit', [CourseController::class, 'editCourse'])->name('admin.editCourse');
+    Route::put('/admin/courses/{id}/edit', [CourseController::class, 'updateCourse'])->name('admin.updateCourse');
+    Route::delete('/admin/courses/{id}/delete', [CourseController::class, 'deleteCourse'])->name('admin.deleteCourse');
 
     Route::get('/admin/categories', [CategoryController::class, 'showCategories'])->name('admin.categories');
     Route::get('/admin/categories/create', [CategoryController::class, 'createCategory'])->name('admin.createCategory');
@@ -61,6 +71,7 @@ Route::middleware(['auth','role:user'])->group(function () {
     Route::get('/student/leaderboard', [StudentController::class, 'showLeaderboard'])->name('student.leaderboard');
     Route::get('/student/achievements', [StudentController::class, 'showAchievements'])->name('student.achievements');
     Route::get('/student/support', [StudentController::class, 'showSupport'])->name('student.support');
+    Route::get('/student/courses/{id}', [StudentController::class, 'showCourse'])->name('student.showCourse');
 });
 
 Route::middleware(['auth','role:agent'])->group(function () {
