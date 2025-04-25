@@ -21,4 +21,14 @@ class Course extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+
+    public function contents()
+    {
+        return $this->hasMany(Content::class);
+    }
+    
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'creator_id');
+    }
 }
