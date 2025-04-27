@@ -27,6 +27,7 @@
             <td class="border p-2 text-center"><?php echo e($quiz->id); ?></td>
             <td class="border p-2 text-center"><?php echo e($quiz->name); ?></td>
             <td class="border p-2 text-center">
+              <a href="<?php echo e(route('admin.quizQuestions', $quiz->id)); ?>" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded">Questions</a>
               <a href="<?php echo e(route('admin.editQuiz', $quiz->id)); ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Edit</a>
               <form action="<?php echo e(route('admin.deleteQuiz', $quiz->id)); ?>" method="POST" style="display:inline;">
                 <?php echo csrf_field(); ?>

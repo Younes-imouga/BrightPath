@@ -27,6 +27,7 @@
             <td class="border p-2 text-center">{{ $quiz->id }}</td>
             <td class="border p-2 text-center">{{ $quiz->name }}</td>
             <td class="border p-2 text-center">
+              <a href="{{ route('admin.quizQuestions', $quiz->id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded">Questions</a>
               <a href="{{ route('admin.editQuiz', $quiz->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Edit</a>
               <form action="{{ route('admin.deleteQuiz', $quiz->id) }}" method="POST" style="display:inline;">
                 @csrf
