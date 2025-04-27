@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\QuizController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -36,12 +37,12 @@ Route::middleware(['role:admin'])->group(function () {
 
     Route::get('/admin/courses', [CourseController::class, 'showCourses'])->name('admin.courses');
     Route::get('/admin/reclamations', [CourseController::class, 'showReclamations'])->name('admin.reclamations');
-    Route::get('/admin/quizzes', [AdminController::class, 'showQuizzes'])->name('admin.quizzes');
-    Route::get('/admin/quizzes/create', [AdminController::class, 'createQuiz'])->name('admin.createQuiz');
-    Route::post('/admin/quizzes', [AdminController::class, 'storeQuiz'])->name('admin.storeQuiz');
-    Route::get('/admin/quizzes/{id}/edit', [AdminController::class, 'editQuiz'])->name('admin.editQuiz');
-    Route::put('/admin/quizzes/{id}', [AdminController::class, 'updateQuiz'])->name('admin.updateQuiz');
-    Route::delete('/admin/quizzes/{id}', [AdminController::class, 'deleteQuiz'])->name('admin.deleteQuiz');
+    Route::get('/admin/quizzes', [QuizController::class, 'showQuizzes'])->name('admin.quizzes');
+    Route::get('/admin/quizzes/create', [QuizController::class, 'createQuiz'])->name('admin.createQuiz');
+    Route::post('/admin/quizzes', [QuizController::class, 'storeQuiz'])->name('admin.storeQuiz');
+    Route::get('/admin/quizzes/{id}/edit', [QuizController::class, 'editQuiz'])->name('admin.editQuiz');
+    Route::put('/admin/quizzes/{id}', [QuizController::class, 'updateQuiz'])->name('admin.updateQuiz');
+    Route::delete('/admin/quizzes/{id}', [QuizController::class, 'deleteQuiz'])->name('admin.deleteQuiz');
 
     Route::get('/admin/courses/create', [CourseController::class, 'createCourse'])->name('admin.createCourse');
     Route::post('/admin/courses', [CourseController::class, 'storeCourse'])->name('admin.storeCourse');

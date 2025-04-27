@@ -17,6 +17,7 @@
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('admin.courses') }}">Courses</a>
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('admin.categories') }}">categories</a>
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('admin.reclamations') }}">Reports</a>
+                    <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('admin.quizzes') }}">Quizzes</a>
                 @elseif(Auth::user()->role === 'agent')
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('agent.dashboard') }}">Dashboard</a>
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('agent.courses') }}">Courses</a>

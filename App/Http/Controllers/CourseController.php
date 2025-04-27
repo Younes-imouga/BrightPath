@@ -104,4 +104,11 @@ class CourseController extends Controller
         return redirect()->route('admin.courses')->with('success', 'Course updated successfully.');
     }
 
+    public function deleteCourse($id) {
+        $course = Course::findOrFail($id);
+        $course->delete();
+
+        return redirect()->route('admin.courses')->with('success', 'Course deleted successfully.');
+    }
+
 }

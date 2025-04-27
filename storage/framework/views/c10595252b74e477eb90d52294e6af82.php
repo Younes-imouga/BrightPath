@@ -17,6 +17,7 @@
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="<?php echo e(route('admin.courses')); ?>">Courses</a>
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="<?php echo e(route('admin.categories')); ?>">categories</a>
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="<?php echo e(route('admin.reclamations')); ?>">Reports</a>
+                    <a class="text-blue-500 hover:text-blue-700 mx-2" href="<?php echo e(route('admin.quizzes')); ?>">Quizzes</a>
                 <?php elseif(Auth::user()->role === 'agent'): ?>
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="<?php echo e(route('agent.dashboard')); ?>">Dashboard</a>
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="<?php echo e(route('agent.courses')); ?>">Courses</a>

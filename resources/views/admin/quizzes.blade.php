@@ -1,31 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BrightPath Admin - Quiz Management</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
-  <!-- Header (Admin Navigation) -->
-  <header class="bg-white shadow p-4 flex justify-between items-center">
-    <h1 class="text-blue-500 text-2xl font-bold">BrightPath Admin</h1>
-    <nav>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-dashboard.html">Dashboard</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-users.html">Users</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-courses.html">Courses</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-quizzes.html">Quizzes</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-reclamations.html">Reports</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="logout.html">Logout</a>
-    </nav>
-  </header>
+@include('components.header')
 
   <!-- Main Content -->
   <main class="container mx-auto p-4 flex-grow">
     <section class="my-8">
-      <h2 class="text-3xl text-blue-500 font-bold mb-4 text-center">Quiz Management</h2>
-      <a href="{{ route('admin.createQuiz') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add New Quiz</a>
-      <table class="w-full border-collapse mt-4">
+      <div class="bg-white rounded-lg shadow p-8 text-center mb-8 flex items-around justify-between px-10">
+        <h2 class="text-3xl text-blue-500 font-bold text-center">Quiz Management</h2>
+        <a href="{{ route('admin.createQuiz') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add New Quiz</a>
+      </div>  
+      <table class="w-full border-collapse mt-4 bg-white shadow-lg">
         <thead>
           <tr>
             <th class="border p-2">ID</th>
@@ -34,6 +17,11 @@
           </tr>
         </thead>
         <tbody>
+          @if($quizzes->isEmpty())
+            <tr class="bg-gray-100 mx-4 ">
+              <td colspan="3" class="border p-2 text-center">No quizzes available at the moment.</td>
+            </tr>
+          @endif
           @foreach($quizzes as $quiz)
           <tr>
             <td class="border p-2 text-center">{{ $quiz->id }}</td>
@@ -52,10 +40,4 @@
       </table>
     </section>
   </main>
-
-  <!-- Footer -->
-  <footer class="bg-white border-t p-4 text-center">
-    <p class="text-gray-600">&copy; 2023 BrightPath Admin.</p>
-  </footer>
 </body>
-</html>
