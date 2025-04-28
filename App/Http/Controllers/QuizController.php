@@ -81,7 +81,7 @@ class QuizController extends Controller
 
         $answersArray = explode(',', $request->answers);
 
-        if ($request->correct < 0 || $request->correct >= count($answersArray)) {
+        if ($request->correct < 0 || $request->correct >= count($answersArray) + 1) {
             return redirect()->back()->withErrors(['correct' => 'The correct answer index is out of bounds.'])->withInput();
         }
 
