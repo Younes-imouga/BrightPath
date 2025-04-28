@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>BrightPath</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -25,7 +26,11 @@
                 @elseif(Auth::user()->role === 'user')
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('student.dashboard') }}">Dashboard</a>
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('student.courses') }}">Courses</a>
+                    <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('student.myCourses') }}">My Courses</a>
+                    <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('student.leaderboard') }}">Leaderboard</a>
+                    <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('student.achievements') }}">Achievements</a>
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('student.profile') }}">Profile</a>
+                    <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('student.support') }}">Support</a>
                 @endif
                 <form action="{{ route('logout') }}" method="POST" class="inline">
                     @csrf

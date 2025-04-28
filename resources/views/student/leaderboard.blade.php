@@ -1,60 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BrightPath - Leaderboard</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 text-gray-800">
-  <!-- Header (Learner Navigation) -->
-  <header class="bg-white shadow p-4 flex justify-between items-center">
-    <h1 class="text-blue-500 text-2xl font-bold">BrightPath</h1>
-    <nav>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="learner-dashboard.html">Dashboard</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="my-courses.html">My Courses</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="profile.html">Profile</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="support.html">Support</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="logout.html">Logout</a>
-    </nav>
-  </header>
-
-  <!-- Main Content -->
-  <main class="container mx-auto p-4">
-    <section class="bg-white rounded-lg shadow p-8 my-8">
-      <h2 class="text-2xl text-blue-500 font-bold text-center mb-4">Leaderboard</h2>
-      <table class="w-full border-collapse">
+<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex flex-col text-gray-800">
+  @include('components.header')
+  <main class="container mx-auto p-4 flex-grow">
+    <section class="bg-white rounded-xl shadow-lg p-10 my-12 max-w-3xl mx-auto">
+      <h2 class="text-3xl text-blue-600 font-extrabold text-center mb-8 drop-shadow">Leaderboard</h2>
+      <table class="w-full border-collapse bg-white shadow">
         <thead>
           <tr>
-            <th class="border p-2">Rank</th>
-            <th class="border p-2">Name</th>
-            <th class="border p-2">Points</th>
+            <th class="border-b-2 p-3 text-left text-blue-700">Rank</th>
+            <th class="border-b-2 p-3 text-left text-blue-700">Name</th>
+            <th class="border-b-2 p-3 text-left text-blue-700">Total Score</th>
+            <th class="border-b-2 p-3 text-left text-blue-700">Quizzes Taken</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="border p-2 text-center">1</td>
-            <td class="border p-2 text-center">Alice</td>
-            <td class="border p-2 text-center">1500</td>
-          </tr>
-          <tr>
-            <td class="border p-2 text-center">2</td>
-            <td class="border p-2 text-center">Bob</td>
-            <td class="border p-2 text-center">1450</td>
-          </tr>
-          <tr>
-            <td class="border p-2 text-center">3</td>
-            <td class="border p-2 text-center">Charlie</td>
-            <td class="border p-2 text-center">1400</td>
-          </tr>
+          @if(count($leaders) > 0)
+            @foreach($leaders as $index => $user)
+              <tr class="{{ $index % 2 === 0 ? 'bg-blue-50' : '' }}">
+                <td class="p-3 font-bold text-blue-500">{{ $index + 1 }}</td>
+                <td class="p-3 font-semibold">{{ $user->username }}</td>
+                <td class="p-3">
+                  <span class="inline-block bg-blue-500 text-white px-4 py-1 rounded-full font-bold shadow">{{ $user->total_score }}</span>
+                </td>
+                <td class="p-3">{{ $user->quizzes_count }}</td>
+              </tr>
+            @endforeach
+          @else
+            <tr>
+              <td colspan="4" class="p-4 text-center text-gray-500">No leaderboard data available.</td>
+            </tr>
+          @endif
         </tbody>
       </table>
     </section>
   </main>
-
-  <!-- Footer -->
-  <footer class="bg-white border-t p-4 text-center">
-    <p class="text-gray-600">&copy; 2023 BrightPath.</p>
-  </footer>
 </body>
-</html>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\Content;
+use App\Models\Reclamation;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -13,6 +14,12 @@ class CourseController extends Controller
     public function showCourses() {
         $courses = Course::all();
         return view('admin.courses', compact('courses'));
+    }
+
+    public function showCourse($id)
+    {
+        $course = \App\Models\Course::with(['contents'])->findOrFail($id);
+        return view('admin.courseDetails', compact('course'));
     }
 
     public function createCourse() {
@@ -57,11 +64,6 @@ class CourseController extends Controller
         $content->save();
 
         return redirect()->route('admin.courses')->with('success', 'Course created successfully.');
-    }
-
-    public function showCourse($id) {
-        $course = Course::with('contents')->findOrFail($id);
-        return view('admin.courseDetails', compact('course'));
     }
     
     public function editCourse($id) {
@@ -109,6 +111,11 @@ class CourseController extends Controller
         $course->delete();
 
         return redirect()->route('admin.courses')->with('success', 'Course deleted successfully.');
+    }
+
+    public function showReclamations() {
+        $reclamations = Reclamation::all();
+        return view('admin.reclamations', compact('reclamations'));
     }
 
 }

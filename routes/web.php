@@ -36,13 +36,16 @@ Route::middleware(['role:admin'])->group(function () {
     Route::put('/admin/users/{id}/unban', [UserController::class, 'unbanUser'])->name('admin.unbanUser');
 
     Route::get('/admin/courses', [CourseController::class, 'showCourses'])->name('admin.courses');
+
     Route::get('/admin/reclamations', [CourseController::class, 'showReclamations'])->name('admin.reclamations');
+
     Route::get('/admin/quizzes', [QuizController::class, 'showQuizzes'])->name('admin.quizzes');
     Route::get('/admin/quizzes/create', [QuizController::class, 'createQuiz'])->name('admin.createQuiz');
     Route::post('/admin/quizzes', [QuizController::class, 'storeQuiz'])->name('admin.storeQuiz');
     Route::get('/admin/quizzes/{id}/edit', [QuizController::class, 'editQuiz'])->name('admin.editQuiz');
     Route::put('/admin/quizzes/{id}', [QuizController::class, 'updateQuiz'])->name('admin.updateQuiz');
     Route::delete('/admin/quizzes/{id}', [QuizController::class, 'deleteQuiz'])->name('admin.deleteQuiz');
+    
     Route::get('/admin/quizzes/{id}/questions', [QuizController::class, 'showQuizQuestions'])->name('admin.quizQuestions');
     Route::get('/admin/quizzes/{quizId}/questions/create', [QuizController::class, 'createQuestion'])->name('admin.createQuestion');
     Route::post('/admin/quizzes/{quizId}/questions', [QuizController::class, 'storeQuestion'])->name('admin.storeQuestion');
@@ -68,17 +71,26 @@ Route::middleware(['role:admin'])->group(function () {
 Route::middleware(['auth','role:user'])->group(function () {
     Route::get('/student', [StudentController::class, 'index'])->name('student.dashboard');
     Route::get('/student/courses', [StudentController::class, 'showCourses'])->name('student.courses');
-    Route::get('/student/my-courses', [StudentController::class, 'showMyCourses'])->name('student.myCourses');
-    Route::get('/student/course-content', [StudentController::class, 'showCourseContent'])->name('student.courseContent');
-    Route::get('/student/profile', [StudentController::class, 'showProfile'])->name('student.profile');
-    Route::get('/student/progress', [StudentController::class, 'showProgress'])->name('student.progress');
-    Route::get('/student/quiz-rules', [StudentController::class, 'showQuizRules'])->name('student.quizRules');
-    Route::get('/student/quiz', [StudentController::class, 'showQuiz'])->name('student.quiz');
-    Route::get('/student/quiz-result', [StudentController::class, 'showQuizResult'])->name('student.quizResult');
-    Route::get('/student/leaderboard', [StudentController::class, 'showLeaderboard'])->name('student.leaderboard');
-    Route::get('/student/achievements', [StudentController::class, 'showAchievements'])->name('student.achievements');
-    Route::get('/student/support', [StudentController::class, 'showSupport'])->name('student.support');
     Route::get('/student/courses/{id}', [StudentController::class, 'showCourse'])->name('student.showCourse');
+    Route::get('/student/myCourses', [StudentController::class, 'showMyCourses'])->name('student.myCourses');
+    Route::get('/student/course-content', [StudentController::class, 'showCourseContent'])->name('student.courseContent');
+
+    Route::get('/student/profile', [StudentController::class, 'showProfile'])->name('student.profile');
+    Route::post('/student/profile', [StudentController::class, 'updateProfile'])->name('student.profile.update');
+    Route::post('/student/profile/password', [StudentController::class, 'updatePassword'])->name('student.profile.password');
+
+    Route::get('/student/progress', [StudentController::class, 'showProgress'])->name('student.progress');
+
+    Route::get('/student/quiz/{id}', [QuizController::class, 'takeQuiz'])->name('student.quiz');
+    Route::get('/student/quiz/result', [StudentController::class, 'showQuizResult'])->name('student.quizResult');
+    Route::post('/quiz/submit', [QuizController::class, 'submitQuiz'])->name('student.submitQuiz');
+
+    Route::get('/student/leaderboard', [StudentController::class, 'showLeaderboard'])->name('student.leaderboard');
+
+    Route::get('/student/support', [StudentController::class, 'showSupport'])->name('student.support');
+    Route::post('/student/support', [StudentController::class, 'submitSupport'])->name('student.support.submit');
+
+    Route::get('/student/achievements', [StudentController::class, 'showAchievements'])->name('student.achievements');
 });
 
 Route::middleware(['auth','role:agent'])->group(function () {

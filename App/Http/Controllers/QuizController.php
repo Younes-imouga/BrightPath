@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Quiz;
 use App\Models\Question;
+use App\Models\QuizResult;
 
 class QuizController extends Controller
 {
     public function showQuizzes() {
-        $quizzes = Quiz::with('course')->get();
+        $quizzes = Quiz::with('course.category' )->get();
+
         return view('admin.quizzes', compact('quizzes'));
     }
 
@@ -130,5 +132,52 @@ class QuizController extends Controller
         $question->delete();
 
         return redirect()->route('admin.quizQuestions', $quizId)->with('success', 'Question deleted successfully.');
+    }
+
+    public function takeQuiz($id) {
+        $quiz = Quiz::with('questions')->findOrFail($id);
+        return view('student.quiz', compact('quiz'));
+    }
+
+    public function submitQuiz(Request $request)
+    {
+        $request->validate([
+            'answers' => 'required|array',
+            'answers.*' => 'integer',
+            'quiz_id' => 'required|exists:quizzes,id',
+        ]);
+    
+        $quiz = Quiz::with('questions', 'course')->findOrFail($request->quiz_id);
+        $questions = $quiz->questions;
+    
+        $correctAnswersCount = 0;
+    
+        foreach ($questions as $question) {
+            if (isset($request->answers[$question->id])) {
+                $selectedAnswerIndex = $request->answers[$question->id];
+    
+                if ($selectedAnswerIndex == $question->correct) {
+                    $correctAnswersCount++;
+                }
+            }
+        }
+
+        $score = $quiz->course->score;
+        $totalScore = $correctAnswersCount * $score / count($questions);
+
+        $result = new QuizResult();
+        $result->user_id = auth()->id();
+        $result->quiz_id = $request->quiz_id;
+        $result->correct_answers = $correctAnswersCount;
+        $result->answers_count = count($questions);
+        $result->score = $totalScore;
+        $result->save();
+
+        return view('student.QuizResults', [
+            'quizName' => $quiz->name,
+            'score' => $totalScore,
+            'correctAnswers' => $correctAnswersCount,
+            'totalQuestions' => count($questions)
+        ]);
     }
 }

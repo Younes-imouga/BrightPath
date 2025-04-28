@@ -1,20 +1,22 @@
 @include('components.header')
-<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
-  <main class="flex-grow container mx-auto p-4">
-    <section class="grid md:grid-cols-3 gap-6 my-8">
-      <div class="bg-white rounded-lg shadow p-6 text-center">
-        <h3 class="text-xl text-blue-500 font-semibold mb-2">Total Users</h3>
-        <p class="text-2xl text-gray-600">1200</p>
-      </div>
-      <div class="bg-white rounded-lg shadow p-6 text-center">
-        <h3 class="text-xl text-blue-500 font-semibold mb-2">Active Courses</h3>
-        <p class="text-2xl text-gray-600">35</p>
-      </div>
-      <div class="bg-white rounded-lg shadow p-6 text-center">
-        <h3 class="text-xl text-blue-500 font-semibold mb-2">Quizzes Taken</h3>
-        <p class="text-2xl text-gray-600">480</p>
+<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex flex-col text-gray-800">
+  <main class="container mx-auto p-4 flex-grow">
+    <section class="my-12">
+      <h2 class="text-4xl text-blue-600 font-extrabold mb-10 text-center drop-shadow">Admin Dashboard</h2>
+      <div class="grid md:grid-cols-3 gap-10">
+        <div class="bg-white rounded-xl shadow-lg p-8 text-center border-l-4 border-blue-400">
+          <h3 class="text-xl text-blue-500 font-semibold mb-2">Total Users</h3>
+          <p class="text-3xl text-gray-700 font-bold">1200</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-8 text-center border-l-4 border-blue-400">
+          <h3 class="text-xl text-blue-500 font-semibold mb-2">Active Courses</h3>
+          <p class="text-3xl text-gray-700 font-bold">35</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-8 text-center border-l-4 border-blue-400">
+          <h3 class="text-xl text-blue-500 font-semibold mb-2">Quizzes Taken</h3>
+          <p class="text-3xl text-gray-700 font-bold">480</p>
+        </div>
       </div>
     </section>
   </main>
 </body>
-</html>

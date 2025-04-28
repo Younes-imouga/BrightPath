@@ -11,17 +11,20 @@ class Quiz extends Model
         'name',
         'course_id',
     ];
+    
     public function course()
     {
         return $this->belongsTo(Course::class);
     }
+
     public function questions()
     {
         return $this->hasMany(Question::class);
     }
-    // public function results()
-    // {
-    //     return $this->hasMany(QuizResult::class);
-    // }
+
+    public function results()
+    {
+        return $this->hasMany(QuizResult::class);
+    }
 
 }
