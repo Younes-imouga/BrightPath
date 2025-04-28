@@ -1,36 +1,37 @@
 @include('components.header')
+<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex flex-col text-gray-800">
+  <main class="container mx-auto p-4 flex-grow">
+    <section class="max-w-xl mx-auto my-12 bg-white rounded-xl shadow-lg p-8">
+      <h2 class="text-3xl text-blue-600 font-extrabold mb-6 text-center drop-shadow">Add New Question</h2>
+      @if($errors->any())
+        <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
+          @foreach($errors->all() as $error)
+            <div>{{ $error }}</div>
+          @endforeach
+        </div>
+      @endif
+      <form action="{{ route('admin.storeQuestion', $quizId) }}" method="POST" class="space-y-6">
+        @csrf
 
-<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
-    <main class="container mx-auto p-4 flex-grow">
-        <section class="my-8">
-            <h2 class="text-3xl text-blue-500 font-bold mb-4 text-center">Add Question</h2>
-            <form action="{{ route('admin.storeQuestion', $quizId) }}" method="POST" class="bg-white rounded-lg shadow p-8">
-                @csrf
-                <div class="mb-4">
-                    <label for="question" class="block text-gray-700">Question Text</label>
-                    <input type="text" name="question" id="question" required class="w-full p-3 border rounded" />
-                    @error('question')
-                        <div class="mt-2 text-red-600">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-4">
-                    <label for="answers" class="block text-gray-700">Answers (comma-separated)</label>
-                    <input type="text" name="answers" id="answers" required class="w-full p-3 border rounded" />
-                    @error('answers')
-                        <div class="mt-2 text-red-600">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-4">
-                    <label for="correct" class="block text-gray-700">Correct Answer Index</label>
-                    <input type="number" name="correct" id="correct" required class="w-full p-3 border rounded" />
-                    @error('correct')
-                        <div class="mt-2 text-red-600">{{ $message }}</div>
-                    @enderror
-                </div>
-                <button type="submit" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Add Question
-                </button>
-            </form>
-        </section>
-    </main>
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2">Question</label>
+          <input type="text" name="question" value="{{ old('question') }}" required class="w-full p-3 border rounded focus:ring-2 focus:ring-blue-200" />
+        </div>
+
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2">Answers (comma separated)</label>
+          <input type="text" name="answers" value="{{ old('answers') }}" required class="w-full p-3 border rounded focus:ring-2 focus:ring-blue-200" />
+        </div>
+
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2">Correct Answer (index, starting from 1)</label>
+          <input type="number" name="correct" value="{{ old('correct') }}" min="1" required class="w-full p-3 border rounded focus:ring-2 focus:ring-blue-200" />
+        </div>
+
+        <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-bold py-3 px-6 rounded-lg shadow transition duration-200">
+          Save
+        </button>
+      </form>
+    </section>
+  </main>
 </body>

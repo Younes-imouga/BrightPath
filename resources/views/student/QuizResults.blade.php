@@ -1,6 +1,6 @@
-@include('components.header')
+    @include('components.header')
 <body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex flex-col text-gray-800">
-  <main class="container mx-auto p-4 flex-grow">
+    <main class="container mx-auto p-4 flex-grow">
     <section class="my-12 max-w-xl mx-auto bg-white rounded-xl shadow-lg p-10 text-center">
       <h2 class="text-3xl text-blue-600 font-extrabold mb-6 drop-shadow">Quiz Results</h2>
       <div class="mb-6">
@@ -13,11 +13,11 @@
             Correct Answers: {{ $correctAnswers }} / {{ $totalQuestions }}
           </span>
         </div>
-      </div>
+            </div>
       <a href="{{ route('student.courses') }}" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-200 mt-4">
-        Back to Courses
-      </a>
-    </section>
-  </main>
+                    Back to Courses
+                </a>
+        </section>
+    </main>
 </body>
 </html>

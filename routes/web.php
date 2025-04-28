@@ -66,6 +66,9 @@ Route::middleware(['role:admin'])->group(function () {
     Route::get('/admin/categories/{id}/edit', [CategoryController::class, 'editCategory'])->name('admin.editCategory');
     Route::put('/admin/categories/{id}', [CategoryController::class, 'updateCategory'])->name('admin.updateCategory');
     Route::delete('/admin/categories/{id}', [CategoryController::class, 'deleteCategory'])->name('admin.deleteCategory');
+
+    Route::get('/admin/reclamations/{id}/respond', [AdminController::class, 'respondReclamation'])->name('admin.respondReclamation');
+    Route::post('/admin/reclamations/{id}/respond', [AdminController::class, 'submitReclamationResponse'])->name('admin.submitReclamationResponse');
 });
 
 Route::middleware(['auth','role:user'])->group(function () {

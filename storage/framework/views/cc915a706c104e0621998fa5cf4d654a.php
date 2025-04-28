@@ -1,43 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BrightPath Admin - Reclamation Oversight</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
-  <!-- Header (Admin Navigation) -->
-  <header class="bg-white shadow p-4 flex justify-between items-center">
-    <h1 class="text-blue-500 text-2xl font-bold">BrightPath Admin</h1>
-    <nav>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-dashboard.html">Dashboard</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-users.html">Users</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-courses.html">Courses</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-quizzes.html">Quizzes</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-reclamations.html">Reports</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="logout.html">Logout</a>
-    </nav>
-  </header>
-
-  <!-- Main Content -->
+<?php echo $__env->make('components.header', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex flex-col text-gray-800">
   <main class="container mx-auto p-4 flex-grow">
-    <section class="space-y-6 my-8">
-      <h2 class="text-2xl text-blue-500 font-bold text-center">Reclamation Oversight</h2>
-      <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-gray-600"><strong>John Doe:</strong> Unable to access course content.</p>
-        <button onclick="alert('Take action')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">
-          Take Action
-        </button>
+    <section class="my-12 bg-white rounded-xl shadow-lg p-8">
+      <h2 class="text-3xl text-blue-600 font-extrabold mb-6 text-center drop-shadow">Reclamation Oversight</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse bg-white shadow">
+          <thead>
+            <tr>
+              <th class="border-b-2 p-3 text-left text-blue-700">User</th>
+              <th class="border-b-2 p-3 text-left text-blue-700">Message</th>
+              <th class="border-b-2 p-3 text-left text-blue-700">Status</th>
+              <th class="border-b-2 p-3 text-left text-blue-700">Response</th>
+              <th class="border-b-2 p-3 text-left text-blue-700">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php $__currentLoopData = $reclamations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $reclamation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+              <tr class="<?php echo e($loop->even ? 'bg-blue-50' : ''); ?>">
+                <td class="p-3 font-semibold"><?php echo e($reclamation->user->username ?? 'Unknown'); ?></td>
+                <td class="p-3"><?php echo e($reclamation->message); ?></td>
+                <td class="p-3">
+                  <span class="inline-block px-3 py-1 rounded-full text-white <?php echo e($reclamation->status === 'resolved' ? 'bg-green-500' : 'bg-yellow-500'); ?>">
+                    <?php echo e(ucfirst($reclamation->status)); ?>
+
+                  </span>
+                </td>
+                <td class="p-3"><?php echo e($reclamation->response ?? '-'); ?></td>
+                <td class="p-3">
+                  
+                  <a href="<?php echo e(route('admin.respondReclamation', $reclamation->id)); ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded transition">Respond</a>
+                  <form action="<?php echo e(route('admin.deleteReclamation', $reclamation->id)); ?>" method="POST" class="inline">
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('DELETE'); ?>
+                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded transition" onclick="return confirm('Are you sure?')">Delete</button>
+                  </form>
+                </td>
+              </tr>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+          </tbody>
+        </table>
       </div>
-      <!-- More reclamation entries as needed -->
     </section>
   </main>
-
-  <!-- Footer -->
   <footer class="bg-white border-t p-4 text-center">
     <p class="text-gray-600">&copy; 2023 BrightPath Admin.</p>
   </footer>
-</body>
-</html>
-<?php /**PATH C:\Users\LENOVO\Desktop\BrightPath\resources\views/admin/reclamations.blade.php ENDPATH**/ ?>
+</body><?php /**PATH C:\Users\LENOVO\Desktop\BrightPath\resources\views/admin/reclamations.blade.php ENDPATH**/ ?>

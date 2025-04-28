@@ -12,10 +12,11 @@
         <table class="w-full border-collapse bg-white shadow text-center">
           <thead >
             <tr>
-              <th class="border-b-2 p-3 text-blue-700 w-[25%]">ID</th>
-              <th class="border-b-2 p-3 text-blue-700 w-[25%]">Name</th>
-              <th class="border-b-2 p-3 text-blue-700 w-[25%]">Category</th>
-              <th class="border-b-2 p-3 text-blue-700 w-[40%]">Actions</th>
+              <th class="border-b-2 p-3 text-blue-700 w-[15%]">ID</th>
+              <th class="border-b-2 p-3 text-blue-700 w-[15%]">Name</th>
+              <th class="border-b-2 p-3 text-blue-700 w-[15%]">Course</th>
+              <th class="border-b-2 p-3 text-blue-700 w-[15%]">Category</th>
+              <th class="border-b-2 p-3 text-blue-700 w-[25%]">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -28,6 +29,7 @@
               <tr class="<?php echo e($loop->even ? 'bg-blue-50' : ''); ?>">
                 <td class="p-3"><?php echo e($quiz->id); ?></td>
                 <td class="p-3"><?php echo e($quiz->name); ?></td>
+                <td class="p-3"><?php echo e($quiz->course->name); ?></td>
                 <td class="p-3"><?php echo e($quiz->course->category->name); ?></td>
                 <td class="p-3">
                   <a href="<?php echo e(route('admin.quizQuestions', $quiz->id)); ?>" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded transition">Questions</a>
