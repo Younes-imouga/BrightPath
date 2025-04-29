@@ -21,7 +21,6 @@
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('admin.quizzes') }}">Quizzes</a>
                 @elseif(Auth::user()->role === 'agent')
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('agent.dashboard') }}">Dashboard</a>
-                    <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('agent.courses') }}">Courses</a>
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('agent.reclamations') }}">Reclamations</a>
                 @elseif(Auth::user()->role === 'user')
                     <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('student.dashboard') }}">Dashboard</a>
@@ -38,7 +37,6 @@
                 </form>
             @else
                 <a class="text-blue-500 hover:text-blue-700 mx-2" href="/">Home</a>
-                <a class="text-blue-500 hover:text-blue-700 mx-2" href="/courses">Courses</a>
                 <a class="text-blue-500 hover:text-blue-700 mx-2" href="/about">about</a>
                 <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('login') }}">Login</a>
                 <a class="text-blue-500 hover:text-blue-700 mx-2" href="{{ route('register') }}">Register</a>

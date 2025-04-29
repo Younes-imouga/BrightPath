@@ -1,4 +1,3 @@
-<body class="bg-gray-100 text-gray-800">
   <!-- Header -->
   @include('components.header')
 

@@ -3,7 +3,7 @@
   @include('components.header')
 
   <!-- Main Content -->
-  <main class="container mx-auto p-4">
+  <main class="container mx-auto p-4 ">
     <section class="bg-white rounded-lg shadow p-8 text-center my-8">
       <h2 class="text-3xl text-blue-500 font-bold mb-4">About Us</h2>
       <p class="text-lg text-gray-600 mb-4">
@@ -25,12 +25,5 @@
       </div>
     </section>
   </main>
-
-  <!-- Footer -->
-  <footer class="bg-white border-t p-4 text-center">
-    <p class="text-gray-600">
-      &copy; 2023 BrightPath.
-      <a class="text-blue-500 hover:underline" href="privacy.html">Privacy Policy</a>
-    </p>
-  </footer>
+  @include('components.footer')
 </body>

@@ -21,19 +21,22 @@
                 <td class="p-3"><?php echo e($reclamation->message); ?></td>
                 <td class="p-3">
                   <span class="inline-block px-3 py-1 rounded-full text-white <?php echo e($reclamation->status === 'resolved' ? 'bg-green-500' : 'bg-yellow-500'); ?>">
-                    <?php echo e(ucfirst($reclamation->status)); ?>
+                    <?php echo e($reclamation->status); ?>
 
                   </span>
                 </td>
                 <td class="p-3"><?php echo e($reclamation->response ?? '-'); ?></td>
                 <td class="p-3">
-                  
+                <?php if($reclamation->status !== 'resolved'): ?>
                   <a href="<?php echo e(route('admin.respondReclamation', $reclamation->id)); ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded transition">Respond</a>
-                  <form action="<?php echo e(route('admin.deleteReclamation', $reclamation->id)); ?>" method="POST" class="inline">
-                    <?php echo csrf_field(); ?>
-                    <?php echo method_field('DELETE'); ?>
-                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded transition" onclick="return confirm('Are you sure?')">Delete</button>
-                  </form>
+                <?php else: ?>
+                <p class="bg-gray-500 hover:bg-gray-700 cursor-not-allowed text-white font-bold py-1 px-2 rounded transition inline-block">Resolved</p>
+                <?php endif; ?>
+                <form action="<?php echo e(route('admin.deleteReclamation', $reclamation->id)); ?>" method="POST" class="inline">
+                  <?php echo csrf_field(); ?>
+                  <?php echo method_field('DELETE'); ?>
+                  <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded transition" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
                 </td>
               </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -42,7 +45,4 @@
       </div>
     </section>
   </main>
-  <footer class="bg-white border-t p-4 text-center">
-    <p class="text-gray-600">&copy; 2023 BrightPath Admin.</p>
-  </footer>
 </body><?php /**PATH C:\Users\LENOVO\Desktop\BrightPath\resources\views/admin/reclamations.blade.php ENDPATH**/ ?>

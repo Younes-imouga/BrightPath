@@ -54,7 +54,7 @@
                     <td class="p-2 text-sm"><?php echo e($rec->message); ?></td>
                     <td class="p-2 text-sm">
                       <span class="inline-block px-3 py-1 rounded-full text-white <?php echo e($rec->status === 'resolved' ? 'bg-green-500' : 'bg-yellow-500'); ?>">
-                        <?php echo e(ucfirst($rec->status)); ?>
+                        <?php echo e($rec->status); ?>
 
                       </span>
                     </td>

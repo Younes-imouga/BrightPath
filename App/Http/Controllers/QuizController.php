@@ -10,12 +10,6 @@ use App\Models\QuizResult;
 
 class QuizController extends Controller
 {
-    public function showQuizzes() {
-        $quizzes = Quiz::with('course.category' )->get();
-
-        return view('admin.quizzes', compact('quizzes'));
-    }
-
     public function createQuiz() {
         $courses = Course::all();
         return view('admin.createQuiz', compact('courses'));
@@ -61,11 +55,6 @@ class QuizController extends Controller
         $quiz->delete();
 
         return redirect()->route('admin.quizzes')->with('success', 'Quiz deleted successfully.');
-    }
-
-    public function showQuizQuestions($id) {
-        $quiz = Quiz::with('questions')->findOrFail($id);
-        return view('admin.quizQuestions', compact('quiz'));
     }
 
     public function createQuestion($quizId) {

@@ -6,7 +6,7 @@
       <div class="mb-4">
         <div class="font-semibold text-gray-700">From: <?php echo e($reclamation->user->username ?? 'Unknown'); ?></div>
         <div class="text-gray-600 mt-2 mb-2">Message: <?php echo e($reclamation->message); ?></div>
-        <div class="text-gray-500 text-sm mb-2">Status: <?php echo e(ucfirst($reclamation->status)); ?></div>
+        <div class="text-gray-500 text-sm mb-2">Status: <?php echo e($reclamation->status); ?></div>
       </div>
       <form action="<?php echo e(route('admin.submitReclamationResponse', $reclamation->id)); ?>" method="POST" class="space-y-6">
         <?php echo csrf_field(); ?>
@@ -20,8 +20,4 @@
       </form>
     </section>
   </main>
-  <footer class="bg-white border-t p-4 text-center">
-    <p class="text-gray-600">&copy; 2023 BrightPath Admin.</p>
-  </footer>
-</body>
-</html><?php /**PATH C:\Users\LENOVO\Desktop\BrightPath\resources\views/admin/respondReclamation.blade.php ENDPATH**/ ?>
+</body><?php /**PATH C:\Users\LENOVO\Desktop\BrightPath\resources\views/admin/respondReclamation.blade.php ENDPATH**/ ?>
