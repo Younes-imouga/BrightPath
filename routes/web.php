@@ -35,27 +35,24 @@ Route::middleware(['role:admin'])->group(function () {
     Route::put('/admin/users/{id}/ban', [UserController::class, 'banUser'])->name('admin.banUser');
     Route::put('/admin/users/{id}/unban', [UserController::class, 'unbanUser'])->name('admin.unbanUser');
 
-    Route::get('/admin/courses', [CourseController::class, 'showCourses'])->name('admin.courses');
-
-    Route::get('/admin/reclamations', [CourseController::class, 'showReclamations'])->name('admin.reclamations');
-
-    Route::get('/admin/quizzes', [QuizController::class, 'showQuizzes'])->name('admin.quizzes');
+    Route::get('/admin/quizzes', [AdminController::class, 'showQuizzes'])->name('admin.quizzes');
     Route::get('/admin/quizzes/create', [QuizController::class, 'createQuiz'])->name('admin.createQuiz');
     Route::post('/admin/quizzes', [QuizController::class, 'storeQuiz'])->name('admin.storeQuiz');
     Route::get('/admin/quizzes/{id}/edit', [QuizController::class, 'editQuiz'])->name('admin.editQuiz');
     Route::put('/admin/quizzes/{id}', [QuizController::class, 'updateQuiz'])->name('admin.updateQuiz');
     Route::delete('/admin/quizzes/{id}', [QuizController::class, 'deleteQuiz'])->name('admin.deleteQuiz');
     
-    Route::get('/admin/quizzes/{id}/questions', [QuizController::class, 'showQuizQuestions'])->name('admin.quizQuestions');
+    Route::get('/admin/quizzes/{id}/questions', [AdminController::class, 'showQuizQuestions'])->name('admin.quizQuestions');
     Route::get('/admin/quizzes/{quizId}/questions/create', [QuizController::class, 'createQuestion'])->name('admin.createQuestion');
     Route::post('/admin/quizzes/{quizId}/questions', [QuizController::class, 'storeQuestion'])->name('admin.storeQuestion');
     Route::get('/admin/questions/{id}/edit', [QuizController::class, 'editQuestion'])->name('admin.editQuestion');
     Route::put('/admin/questions/{id}', [QuizController::class, 'updateQuestion'])->name('admin.updateQuestion');
     Route::delete('/admin/questions/{id}', [QuizController::class, 'deleteQuestion'])->name('admin.deleteQuestion');
 
-    Route::get('/admin/courses/create', [CourseController::class, 'createCourse'])->name('admin.createCourse');
+    Route::get('/admin/courses', [AdminController::class, 'showCourses'])->name('admin.courses');
+    Route::get('/admin/courses/create', [AdminController::class, 'createCourse'])->name('admin.createCourse');
+    Route::get('/admin/courses/{id}', [AdminController::class, 'showCourse'])->name('admin.showCourse');
     Route::post('/admin/courses', [CourseController::class, 'storeCourse'])->name('admin.storeCourse');
-    Route::get('/admin/courses/{id}', [CourseController::class, 'showCourse'])->name('admin.showCourse');
     Route::get('/admin/courses/{id}/edit', [CourseController::class, 'editCourse'])->name('admin.editCourse');
     Route::put('/admin/courses/{id}/edit', [CourseController::class, 'updateCourse'])->name('admin.updateCourse');
     Route::delete('/admin/courses/{id}/delete', [CourseController::class, 'deleteCourse'])->name('admin.deleteCourse');
@@ -67,8 +64,10 @@ Route::middleware(['role:admin'])->group(function () {
     Route::put('/admin/categories/{id}', [CategoryController::class, 'updateCategory'])->name('admin.updateCategory');
     Route::delete('/admin/categories/{id}', [CategoryController::class, 'deleteCategory'])->name('admin.deleteCategory');
 
+    Route::get('/admin/reclamations', [AdminController::class, 'showReclamations'])->name('admin.reclamations');
     Route::get('/admin/reclamations/{id}/respond', [AdminController::class, 'respondReclamation'])->name('admin.respondReclamation');
     Route::post('/admin/reclamations/{id}/respond', [AdminController::class, 'submitReclamationResponse'])->name('admin.submitReclamationResponse');
+    Route::delete('/admin/reclamations/{id}/delete', [AdminController::class, 'deleteReclamation'])->name('admin.deleteReclamation');
 });
 
 Route::middleware(['auth','role:user'])->group(function () {
@@ -100,4 +99,9 @@ Route::middleware(['auth','role:agent'])->group(function () {
     Route::get('/agent', [AgentController::class, 'index'])->name('agent.dashboard');
     Route::get('/agent/courses', [AgentController::class, 'showCourses'])->name('agent.courses');
     Route::get('/agent/reclamations', [AgentController::class, 'showReclamations'])->name('agent.reclamations');
+
+    Route::get('/agent/reclamations', [AgentController::class, 'showReclamations'])->name('agent.reclamations');
+    Route::get('/agent/reclamations/{id}/respond', [AgentController::class, 'respondReclamation'])->name('agent.respondReclamation');
+    Route::post('/agent/reclamations/{id}/respond', [AgentController::class, 'submitReclamationResponse'])->name('agent.submitReclamationResponse');
+    Route::delete('/agent/reclamations/{id}/delete', [AgentController::class, 'deleteReclamation'])->name('agent.deleteReclamation');
 });
