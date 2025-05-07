@@ -22,22 +22,34 @@
 
   <!-- Main Content -->
   <main class="container mx-auto p-4 flex-grow">
-    <section class="space-y-6 my-8">
-      <h2 class="text-2xl text-blue-500 font-bold text-center">Quiz Management</h2>
-      <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-xl text-blue-500 font-semibold">Programming Basics Quiz</h3>
-        <p class="text-gray-600">Questions: 10</p>
-        <div class="mt-4">
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">Edit</button>
-          <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">Delete</button>
-        </div>
-      </div>
-      <!-- More quizzes as needed -->
-      <div class="text-center">
-        <button onclick="alert('Add quiz functionality coming soon!')" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-          Add New Quiz
-        </button>
-      </div>
+    <section class="my-8">
+      <h2 class="text-3xl text-blue-500 font-bold mb-4 text-center">Quiz Management</h2>
+      <a href="{{ route('admin.createQuiz') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add New Quiz</a>
+      <table class="w-full border-collapse mt-4">
+        <thead>
+          <tr>
+            <th class="border p-2">ID</th>
+            <th class="border p-2">Name</th>
+            <th class="border p-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($quizzes as $quiz)
+          <tr>
+            <td class="border p-2 text-center">{{ $quiz->id }}</td>
+            <td class="border p-2 text-center">{{ $quiz->name }}</td>
+            <td class="border p-2 text-center">
+              <a href="{{ route('admin.editQuiz', $quiz->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Edit</a>
+              <form action="{{ route('admin.deleteQuiz', $quiz->id) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Delete</button>
+              </form>
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
     </section>
   </main>
 

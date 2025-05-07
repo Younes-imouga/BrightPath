@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BrightPath - Course Details</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen dark">
   <!-- Header -->
   <header class="bg-white shadow p-4 flex justify-between items-center">
@@ -45,4 +37,3 @@
     </p>
   </footer>
 </body>
-</html>
