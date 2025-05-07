@@ -10,17 +10,6 @@ use Illuminate\Http\Request;
 class CourseController extends Controller
 {
 
-    public function showCourses() {
-        $courses = Course::all();
-        return view('admin.courses', compact('courses'));
-    }
-
-    public function createCourse() {
-        $categories = Category::all();
-
-        return view('admin.createCourse', compact('categories'));
-    }
-
     public function storeCourse(Request $request) {
         $request->validate([
             'title' => 'required|string|max:255',
@@ -57,11 +46,6 @@ class CourseController extends Controller
         $content->save();
 
         return redirect()->route('admin.courses')->with('success', 'Course created successfully.');
-    }
-
-    public function showCourse($id) {
-        $course = Course::with('contents')->findOrFail($id);
-        return view('admin.courseDetails', compact('course'));
     }
     
     public function editCourse($id) {
@@ -102,6 +86,13 @@ class CourseController extends Controller
         $content->save();
 
         return redirect()->route('admin.courses')->with('success', 'Course updated successfully.');
+    }
+
+    public function deleteCourse($id) {
+        $course = Course::findOrFail($id);
+        $course->delete();
+
+        return redirect()->route('admin.courses')->with('success', 'Course deleted successfully.');
     }
 
 }

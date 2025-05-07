@@ -1,52 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BrightPath - Quiz</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 text-gray-800">
-  <!-- Header (Learner Navigation) -->
-  <header class="bg-white shadow p-4 flex justify-between items-center">
-    <h1 class="text-blue-500 text-2xl font-bold">BrightPath</h1>
-    <nav>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="learner-dashboard.html">Dashboard</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="my-courses.html">My Courses</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="profile.html">Profile</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="support.html">Support</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="logout.html">Logout</a>
-    </nav>
-  </header>
-
-  <!-- Main Content -->
-  <main class="container mx-auto p-4">
-    <section class="bg-white rounded-lg shadow p-8 my-8">
-      <h2 class="text-2xl text-blue-500 font-bold mb-4">Quiz: Programming Basics</h2>
-      <div class="mb-6">
-        <p class="text-lg mb-2"><strong>Q1:</strong> What does HTML stand for?</p>
-        <div class="space-y-2">
-          <button onclick="alert('Answer recorded!')" class="w-full border rounded p-3 hover:bg-gray-100">
-            Hyper Text Markup Language
-          </button>
-          <button onclick="alert('Answer recorded!')" class="w-full border rounded p-3 hover:bg-gray-100">
-            Home Tool Markup Language
-          </button>
-          <button onclick="alert('Answer recorded!')" class="w-full border rounded p-3 hover:bg-gray-100">
-            Hyperlinks and Text Markup Language
-          </button>
-        </div>
-      </div>
-      <!-- Add more questions as needed -->
-      <button onclick="window.location.href='quiz-results.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Submit Quiz
-      </button>
+@include('components.header')
+<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex flex-col text-gray-800">
+  <main class="container mx-auto p-4 flex-grow">
+    <section class="my-12">
+      <h2 class="text-3xl text-blue-600 font-extrabold mb-8 text-center drop-shadow">Quiz: {{ $quiz->name }}</h2>
+      <form id="quizForm" action="{{ route('student.submitQuiz', $quiz->id) }}" method="POST" class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8 space-y-8">
+        @csrf
+        <input type="hidden" name="quiz_id" value="{{ $quiz->id }}">
+        @if(count($quiz->questions) > 0)
+          @foreach($quiz->questions as $index => $question)
+            <div class="mb-8 bg-blue-50 rounded-lg shadow p-6">
+              <h3 class="text-lg font-bold mb-4">
+                <span class="text-blue-600">Q{{ $index + 1 }}:</span> {{ $question->question }}
+              </h3>
+              @php $answers = explode(',', $question->answers); @endphp
+              <div class="space-y-3">
+                @foreach($answers as $answerIndex => $answer)
+                  <label class="block w-full">
+                    <input
+                      type="radio"
+                      name="answers[{{ $question->id }}]"
+                      value="{{ $answerIndex }}"
+                      class="peer hidden"
+                      id="answer{{ $question->id }}_{{ $answerIndex }}"
+                      required
+                    />
+                    <span class="block w-full bg-white border border-gray-300 rounded px-4 py-3 text-center text-gray-800 cursor-pointer transition
+                      peer-checked:bg-blue-100 peer-checked:border-blue-500
+                      hover:bg-gray-100 hover:border-blue-400">
+                      {{ trim($answer) }}
+                    </span>
+                  </label>
+                @endforeach
+              </div>
+            </div>
+          @endforeach
+        @else
+          <div class="text-center text-gray-500">No questions available for this quiz.</div>
+        @endif
+        <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg shadow transition duration-200">
+          Submit Quiz
+        </button>
+      </form>
     </section>
   </main>
-
-  <!-- Footer -->
-  <footer class="bg-white border-t p-4 text-center">
-    <p class="text-gray-600">&copy; 2023 BrightPath.</p>
-  </footer>
 </body>
 </html>

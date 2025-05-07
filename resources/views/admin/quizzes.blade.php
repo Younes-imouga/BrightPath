@@ -1,61 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BrightPath Admin - Quiz Management</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
-  <!-- Header (Admin Navigation) -->
-  <header class="bg-white shadow p-4 flex justify-between items-center">
-    <h1 class="text-blue-500 text-2xl font-bold">BrightPath Admin</h1>
-    <nav>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-dashboard.html">Dashboard</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-users.html">Users</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-courses.html">Courses</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-quizzes.html">Quizzes</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="admin-reclamations.html">Reports</a>
-      <a class="text-blue-500 hover:text-blue-700 mx-2" href="logout.html">Logout</a>
-    </nav>
-  </header>
-
-  <!-- Main Content -->
+@include('components.header')
+<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex flex-col text-gray-800">
   <main class="container mx-auto p-4 flex-grow">
-    <section class="my-8">
-      <h2 class="text-3xl text-blue-500 font-bold mb-4 text-center">Quiz Management</h2>
-      <a href="{{ route('admin.createQuiz') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add New Quiz</a>
-      <table class="w-full border-collapse mt-4">
-        <thead>
-          <tr>
-            <th class="border p-2">ID</th>
-            <th class="border p-2">Name</th>
-            <th class="border p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($quizzes as $quiz)
-          <tr>
-            <td class="border p-2 text-center">{{ $quiz->id }}</td>
-            <td class="border p-2 text-center">{{ $quiz->name }}</td>
-            <td class="border p-2 text-center">
-              <a href="{{ route('admin.editQuiz', $quiz->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Edit</a>
-              <form action="{{ route('admin.deleteQuiz', $quiz->id) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Delete</button>
-              </form>
-            </td>
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
+    <section class="my-12 bg-white rounded-xl shadow-lg p-8">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+        <h2 class="text-3xl text-blue-600 font-extrabold drop-shadow">Manage Quizzes</h2>
+        <a href="{{ route('admin.createQuiz') }}" class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-200">
+          Add New Quiz
+        </a>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse bg-white shadow text-center">
+          <thead >
+            <tr>
+              <th class="border-b-2 p-3 text-blue-700 w-[15%]">ID</th>
+              <th class="border-b-2 p-3 text-blue-700 w-[15%]">Name</th>
+              <th class="border-b-2 p-3 text-blue-700 w-[15%]">Course</th>
+              <th class="border-b-2 p-3 text-blue-700 w-[15%]">Category</th>
+              <th class="border-b-2 p-3 text-blue-700 w-[25%]">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if($quizzes->isEmpty())
+              <tr class="bg-blue-50">
+                <td colspan="3" class="border p-2">No quizzes available at the moment.</td>
+              </tr>
+            @endif
+            @foreach($quizzes as $quiz)
+              <tr class="{{ $loop->even ? 'bg-blue-50' : '' }}">
+                <td class="p-3">{{ $quiz->id }}</td>
+                <td class="p-3">{{ $quiz->name }}</td>
+                <td class="p-3">{{ $quiz->course->name }}</td>
+                <td class="p-3">{{ $quiz->course->category->name }}</td>
+                <td class="p-3">
+                  <a href="{{ route('admin.quizQuestions', $quiz->id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded transition">Questions</a>
+                  <a href="{{ route('admin.editQuiz', $quiz->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded transition">Edit</a>
+                  <form action="{{ route('admin.deleteQuiz', $quiz->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded transition" onclick="return confirm('Are you sure?')">Delete</button>
+                  </form>
+                </td>
+              </tr> 
+            @endforeach
+          </tbody>
+        </table>
+      </div>
     </section>
   </main>
-
-  <!-- Footer -->
-  <footer class="bg-white border-t p-4 text-center">
-    <p class="text-gray-600">&copy; 2023 BrightPath Admin.</p>
-  </footer>
 </body>
-</html>

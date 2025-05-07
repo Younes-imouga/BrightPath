@@ -51,4 +51,14 @@ class User extends Authenticatable
     {
         return $this->role === $role;
     }
+
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class);
+    }
+
+    public function results()
+    {
+        return $this->hasMany(QuizResult::class);
+    }
 }

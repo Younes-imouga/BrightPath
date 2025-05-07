@@ -2,85 +2,77 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
 use App\Models\Category;
-use Illuminate\Http\Request;
+use App\Models\Course;
 use App\Models\Quiz;
+use App\Models\Reclamation;
+use App\Models\User;
+use App\Models\QuizResult;
+use Illuminate\Support\Facades\DB;
 
-class AdminController extends Controller
+class AdminController extends AgentController
 {
     public function showAdmin(){
-        return view('admin.dashboard');
+        $totalUsers = User::count();
+        $activeCourses = Course::count();
+        $quizzesTaken = QuizResult::count();
+
+        $latestResults = QuizResult::select('id', 'user_id', 'quiz_id', 'score')
+            ->whereIn('id', function($query) {
+                $query->select(DB::raw('MAX(id)'))
+                    ->from('quiz_results')
+                    ->groupBy('user_id', 'quiz_id');
+            });
+
+        $leaders = User::select('users.id', 'users.username')
+            ->leftJoinSub($latestResults, 'latest_results', function($join) {
+                $join->on('users.id', '=', 'latest_results.user_id');
+            })
+            ->selectRaw('COALESCE(SUM(latest_results.score),0) as total_score')
+            ->selectRaw('COUNT(DISTINCT latest_results.quiz_id) as quizzes_count')
+            ->groupBy('users.id', 'users.username')
+            ->orderByDesc('total_score')
+            ->limit(10)
+            ->get();
+
+        return view('admin.dashboard', compact('totalUsers', 'activeCourses', 'quizzesTaken', 'leaders'));
     }
 
     public function showUsers(){
-        $users = \App\Models\User::all();
+        $users = User::all();
         return view('admin.users', compact('users'));
     }
 
-    public function showReclamations(){
-        return view('admin.reclamations');
+    public function showReclamations() {
+        $reclamations = Reclamation::all();
+        return view('admin.reclamations', compact('reclamations'));
     }
 
-    public function showQuizzes(){
-        return view('admin.settings');
+    public function showCourses() {
+        $courses = Course::all();
+        return view('admin.courses', compact('courses'));
     }
 
     public function createCourse() {
-        return view('admin.create');
+        $categories = Category::all();
+
+        return view('admin.createCourse', compact('categories'));
     }
 
-    public function storeCourse(Request $request) {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'duration' => 'required|integer|min:1',
-        ]);
-
-        $course = new Course();
-        $course->title = $request->title;
-        $course->description = $request->description;
-        $course->duration = $request->duration;
-        $course->save();
-
-        return redirect()->route('admin.courses')->with('success', 'Course created successfully.');
+    public function showCourse($id)
+    {
+        $course = Course::with(['contents'])->findOrFail($id);
+        return view('admin.courseDetails', compact('course'));
     }
 
-    public function deleteQuiz($id) {
-        $quiz = Quiz::findOrFail($id);
-        $quiz->delete();
+    public function showQuizzes() {
+        $quizzes = Quiz::with('course.category' )->get();
 
-        return redirect()->route('admin.quizzes')->with('success', 'Quiz deleted successfully.');
+        return view('admin.quizzes', compact('quizzes'));
     }
 
-    public function storeQuiz(Request $request) {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'course_id' => 'required|exists:courses,id',
-        ]);
-
-        Quiz::create([
-            'name' => $request->name,
-            'course_id' => $request->course_id,
-        ]);
-
-        return redirect()->route('admin.quizzes')->with('success', 'Quiz created successfully.');
-    }
-
-    public function updateQuiz(Request $request, $id) {
-        // Validate the incoming request data
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'course_id' => 'required|exists:courses,id', // Ensure the course exists
-        ]);
-
-        // Find the quiz by ID and update it
-        $quiz = Quiz::findOrFail($id);
-        $quiz->update([
-            'name' => $request->name,
-            'course_id' => $request->course_id,
-        ]);
-
-        return redirect()->route('admin.quizzes')->with('success', 'Quiz updated successfully.');
+    public function showQuizQuestions($id) {
+        $quiz = Quiz::with('questions')->findOrFail($id);
+        return view('admin.quizQuestions', compact('quiz'));
     }
 }
